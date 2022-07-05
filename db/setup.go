@@ -24,7 +24,7 @@ var doOnce sync.Once
 
 const MongoURI = "mongodb://localhost:27017/"
 
-func InitClient() (*mongo.Client, error) {
+func InitClient() *mongo.Client {
 	doOnce.Do(func() {
 		clientOptions := options.Client().ApplyURI(MongoURI)
 
@@ -37,7 +37,9 @@ func InitClient() (*mongo.Client, error) {
 			panic(err)
 		}
 		dbClient = mongoClient
-	})
 
-	return dbClient, clientError
+	})
+	return dbClient
 }
+
+var DbClient *mongo.Client = InitClient()

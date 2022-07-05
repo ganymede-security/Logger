@@ -1,5 +1,11 @@
 package main
 
+import (
+	"logger/api"
+	"logger/db"
+)
+
 func main() {
-	api.startGin()
+	db.CreateDb()
+	api.StartGin()
 }

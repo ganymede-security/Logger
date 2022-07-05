@@ -2,15 +2,18 @@ package db
 
 import (
 	"fmt"
-	"log"
+
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func CreateDb() {
-	client, err := InitClient()
-	if err != nil {
-		log.Printf("Error connecting to Mongo Client")
-	}
+	client := DbClient
 
 	collection := client.Database("db1").Collection("logs")
 	fmt.Print(collection)
+}
+
+func GetCollection(client *mongo.Client, collectionName string) *mongo.Collection {
+	collection := client.Database("db1").Collection(collectionName)
+	return collection
 }
