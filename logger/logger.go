@@ -7,6 +7,13 @@ import (
 	"strings"
 )
 
+type callInfo struct {
+	packageName string
+	fileName    string
+	funcName    string
+	line        int
+}
+
 type (
 	Logger interface {
 		Debug(c context.Context, format string, args ...interface{})
@@ -23,14 +30,7 @@ var (
 	New loggerFactory
 )
 
-type callInfo struct {
-	PackageName string
-	FileName    string
-	FuncName    string
-	Line        int
-}
-
-func RetrievePackage() *callInfo {
+func Debug(c context.Context, format string, args ...interface{}) *callInfo {
 	pc, file, line, _ := runtime.Caller(1)
 	_, fileName := path.Split(file)
 	parts := strings.Split(runtime.FuncForPC(pc).Name(), ".")
@@ -45,9 +45,9 @@ func RetrievePackage() *callInfo {
 		packageName = strings.Join(parts[0:pl-1], ".")
 	}
 	return &callInfo{
-		PackageName: packageName,
-		FileName:    fileName,
-		FuncName:    funcName,
-		Line:        line,
+		packageName: packageName,
+		fileName:    fileName,
+		funcName:    funcName,
+		line:        line,
 	}
 }
