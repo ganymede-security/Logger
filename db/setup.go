@@ -6,7 +6,6 @@ import (
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 type Logs struct {
@@ -33,9 +32,6 @@ func InitClient() *mongo.Client {
 			clientError = err
 		}
 
-		if err := mongoClient.Ping(context.TODO(), readpref.Primary()); err != nil {
-			panic(err)
-		}
 		dbClient = mongoClient
 
 	})

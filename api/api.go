@@ -27,11 +27,6 @@ type UserResponse struct {
 	Data    map[string]interface{} `json:"data"`
 }
 
-var logs = []Log{
-	{Id: "1", Date: "1984-03-09", Time: "17:22:47", File: "/", Level: "info", Msg: "test", Args: "Hello"},
-	{Id: "1", Date: "1984-03-09", Time: "17:22:47", File: "/", Level: "info", Msg: "test", Args: "Hello"},
-}
-
 var logsCollection *mongo.Collection = db.GetCollection(db.DbClient, "logs")
 var validate = validator.New()
 
