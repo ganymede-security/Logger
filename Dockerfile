@@ -1,18 +1,18 @@
 # syntax=docker/dockerfile:1
 FROM golang:1.18.3-buster
 
-WORKDIR /home/chandlerbing98/Logger
+ADD . /go/src/logger
+WORKDIR /home/chandlerbing/Logger
 
 COPY go.mod ./
 COPY go.sum ./
-COPY main.go ./
-COPY /api ./
-COPY /db ./
+ADD . /home/chandlerbing/Logger
 
 RUN go mod download
 
 COPY *.go ./
 
-RUN go build -v /home/chandlerbing/Logger/
+RUN go build -v .
+RUN go install .
 
-CMD [ "/Logger" ]
+CMD [ "logger" ]
