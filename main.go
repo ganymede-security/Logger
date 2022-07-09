@@ -1,11 +1,20 @@
 package main
 
 import (
-	"logger/api"
-	"logger/db"
+	"logger/configs"
+	"logger/routes"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	db.CreateDb()
-	api.StartGin()
+	router := gin.Default()
+
+	// run database
+	configs.ConnectDB()
+
+	// routes
+	routes.LoggerRoute(router)
+
+	router.Run("localhost:6000")
 }

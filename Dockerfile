@@ -2,11 +2,11 @@
 FROM golang:1.18.3-buster
 
 ADD . /go/src/logger
-WORKDIR /home/chandlerbing/Logger
+WORKDIR /home/chandlerbing/logger
 
 COPY go.mod ./
 COPY go.sum ./
-ADD . /home/chandlerbing/Logger
+ADD . /home/chandlerbing/logger
 
 RUN go mod download
 
