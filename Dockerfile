@@ -1,18 +1,14 @@
 # syntax=docker/dockerfile:1
-FROM golang:1.18.3-buster
+FROM golang:1.18.3-alpine3.16 AS build-env
+ADD . /logger
+WORKDIR /logger
+ENV GO111MODULE=on
+RUN CGO_ENABLED=0 GOOS=linux go build -a -o logger
 
-ADD . /go/src/logger
-WORKDIR /home/chandlerbing/logger
 
-COPY go.mod ./
-COPY go.sum ./
-ADD . /home/chandlerbing/logger
-
-RUN go mod download
-
-COPY *.go ./
-
-RUN go build -v .
-RUN go install .
-
-CMD [ "logger" ]
+# final stage
+FROM alpine:latest
+WORKDIR /root/
+COPY --from=build-env /logger .
+EXPOSE 6000
+ENTRYPOINT [ "./logger" ]
